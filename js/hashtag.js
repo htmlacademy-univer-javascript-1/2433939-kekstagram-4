@@ -96,4 +96,4 @@ const clearHashtagsField = () => {
   formValidator.validate();
 };
 
-export {setupHashtagInput, clearHashtagsField};
+export {clearHashtagsField, setupHashtagInput};
