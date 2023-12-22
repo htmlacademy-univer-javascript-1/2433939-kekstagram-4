@@ -1,3 +1,5 @@
 import {getPhotos} from './data.js';
+import {rendrPictures} from './pictures.js';
 
-getPhotos();
+const picturesArray = getPhotos();
+rendrPictures(picturesArray);
