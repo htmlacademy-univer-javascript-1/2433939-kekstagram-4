@@ -1,7 +1,6 @@
 //Функция для проверки длины строки
 const checkStringLength = (string, maxLength) => string.length <= maxLength;
 
-//Проверка
 checkStringLength('проверяемая строка', 20);
 
 //Функция для проверки строки на палиндром
