@@ -4,9 +4,9 @@ const imageContainer = document.querySelector('.big-picture');
 const loadMoreButton = imageContainer.querySelector('.comments-loader');
 const commentCountPicture = imageContainer.querySelector('.social__comment-count');
 const commentsContainer = imageContainer.querySelector('.social__comments');
-const commentTemplate = commentsContainer.children[0].cloneNode(true);
+const commentTemplate = commentsContainer.children[0];
 
-let commentsMultiplier = 1;
+let COMMENTS_MULTIPLIER = 1;
 
 const createCommentElement = (commentData) => {
   const commentElement = commentTemplate.cloneNode(true);
@@ -22,18 +22,22 @@ const createCommentElement = (commentData) => {
 };
 
 const addNewComments = () => {
-  const newCommentsCount = MAX_NEW_COMMENTS * commentsMultiplier;
+  const newCommentsCount = MAX_NEW_COMMENTS * COMMENTS_MULTIPLIER;
   const totalCommentsCount = commentsContainer.children.length;
-  const addedCommentsCount = Math.min(newCommentsCount, totalCommentsCount);
+  const addedCommentsCount = newCommentsCount >= totalCommentsCount ? totalCommentsCount : newCommentsCount;
 
   for (let i = 0; i < addedCommentsCount; i++) {
     if (i < newCommentsCount && i >= newCommentsCount - MAX_NEW_COMMENTS) {
-      commentCountPicture.children[i].classList.remove('hidden');
+      commentsContainer.children[i].classList.remove('hidden');
     }
   }
 
-  loadMoreButton.classList.toggle('hidden', totalCommentsCount <= newCommentsCount);
-
+  if (totalCommentsCount > newCommentsCount) {
+    loadMoreButton.classList.toggle('hidden');
+  }
+  else {
+    loadMoreButton.classList.add('hidden');
+  }
   commentCountPicture.innerHTML = `${addedCommentsCount} из <span class="comments-count">${totalCommentsCount}</span> комментариев`;
 };
 
@@ -44,12 +48,12 @@ const setComments = (commentsData) => {
     commentsContainer.appendChild(createCommentElement(commentData));
   });
 
-  commentsMultiplier = 1;
+  COMMENTS_MULTIPLIER = 1;
   addNewComments();
 };
 
 loadMoreButton.addEventListener('click', () => {
-  commentsMultiplier++;
+  COMMENTS_MULTIPLIER++;
   addNewComments();
 });
 

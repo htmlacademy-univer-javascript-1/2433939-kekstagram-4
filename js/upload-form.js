@@ -2,20 +2,20 @@ import {pressEscape} from './util.js';
 import {setEffects} from './effects.js';
 import {setInitialScale} from './scaler.js';
 import {setupHashtagInput, clearHashtagsField, checkFormValidation} from './hashtag.js';
-import {setData} from './connect-server.js';
+import {setData} from './api.js';
 import {addPostMessages, showSuccessMessage, closeMessage, showErrorMessage} from './post-message.js';
 
 const form = document.querySelector('.img-upload__form');
-const fileInput = document.querySelector('#upload-file');
-const overlayElement = document.querySelector('.img-upload__overlay');
-const closeUploadButton = document.querySelector('#upload-cancel');
+const fileInput = form.querySelector('#upload-file');
+const overlayElement = form.querySelector('.img-upload__overlay');
+const closeUploadButton = form.querySelector('#upload-cancel');
 
 const commentsTextArea = overlayElement.querySelector('.text__description');
 const submitButton = overlayElement.querySelector('#upload-submit');
 
 const clearUploadForm = () => {
   overlayElement.classList.add('hidden');
-  document.body.classList.remove('modal-open');
+  document.querySelector('body').classList.remove('modal-open');
 
   fileInput.value = '';
   clearHashtagsField();
