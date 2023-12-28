@@ -1,4 +1,4 @@
-import {renderPictures} from './pictures.js';
+import {renderUserPhotos} from './pictures.js';
 import {showFilteredPictures} from './filters.js';
 
 const ERROR_Z_POSITION = 100;
@@ -10,7 +10,7 @@ let pictures = [];
 
 const onRecieveSuccess = (data) => {
   pictures = data.slice();
-  renderPictures(data);
+  renderUserPhotos(data);
   showFilteredPictures();
 };
 

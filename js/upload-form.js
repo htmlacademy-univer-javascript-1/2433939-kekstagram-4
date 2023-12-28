@@ -1,58 +1,62 @@
+import {uploadHashtagInput, clearHashtagsField, checkFormValidation} from './hashtag.js';
 import {pressEscape} from './util.js';
+import {setScale} from './scaler.js';
 import {setEffects} from './effects.js';
-import {setInitialScale} from './scaler.js';
-import {setupHashtagInput, clearHashtagsField, checkFormValidation} from './hashtag.js';
 import {setData} from './api.js';
-import {addPostMessages, showSuccessMessage, closeMessage, showErrorMessage} from './post-message.js';
+import {addPostMessages, showSuccessMessage, closeMessage, showErrorMessage} from './message.js';
 
 const form = document.querySelector('.img-upload__form');
-const fileInput = form.querySelector('#upload-file');
-const overlayElement = form.querySelector('.img-upload__overlay');
-const closeUploadButton = form.querySelector('#upload-cancel');
 
-const commentsTextArea = overlayElement.querySelector('.text__description');
-const submitButton = overlayElement.querySelector('#upload-submit');
+const uploadingControl = form.querySelector('#upload-file');
+const uploadingOverlay = form.querySelector('.img-upload__overlay');
+const uploadingClose = form.querySelector('#upload-cancel');
 
-const clearUploadForm = () => {
-  overlayElement.classList.add('hidden');
+const uploadingComments = uploadingOverlay.querySelector('.text__description');
+const uploadingButton = uploadingOverlay.querySelector('#upload-submit');
+
+const clearForm = () => {
+  uploadingOverlay.classList.add('hidden');
   document.querySelector('body').classList.remove('modal-open');
 
-  fileInput.value = '';
+  uploadingControl.value = '';
   clearHashtagsField();
-  commentsTextArea.value = '';
+  uploadingComments.value = '';
+
   closeMessage();
 
-  submitButton.disabled = false;
+  uploadingButton.disabled = false;
 };
 
-const escapeKey = (evt) => {
-  if (pressEscape(evt) && !evt.target.classList.contains('text__hashtags') && !evt.target.classList.contains('text__description')) {
-    clearUploadForm();
+const onEscapeKeyDown = (evt) => {
+  if(pressEscape(evt) && !evt.target.classList.contains('text__hashtags') && !evt.target.classList.contains('text__description')) {
+    clearForm();
 
-    document.removeEventListener('keydown', escapeKey);
+    document.removeEventListener('keydown', onEscapeKeyDown);
   }
 };
 
-closeUploadButton.addEventListener('click', () => {
-  clearUploadForm();
+const closeForm = () => {
+  clearForm();
 
-  document.removeEventListener('keydown', escapeKey);
-});
+  document.removeEventListener('keydown', onEscapeKeyDown);
+};
 
-const ClickOnUpload = () => {
-  document.addEventListener('keydown', escapeKey);
+uploadingClose.addEventListener('click', closeForm);
 
-  overlayElement.classList.remove('hidden');
-  document.body.classList.add('modal-open');
+const onUploadClick = () => {
+  document.addEventListener('keydown', onEscapeKeyDown);
 
-  setInitialScale();
+  uploadingOverlay.classList.remove('hidden');
+  document.querySelector('body').classList.add('modal-open');
+
+  setScale();
   setEffects();
 
-  setupHashtagInput();
+  uploadHashtagInput();
 };
 
 const uploadForm = () => {
-  fileInput.addEventListener('change', ClickOnUpload);
+  uploadingControl.addEventListener('change', onUploadClick);
   addPostMessages();
 };
 
@@ -66,4 +70,5 @@ const onFormSubmit = (evt) => {
 
 form.addEventListener('submit', onFormSubmit);
 
-export {uploadForm, closeUploadButton, escapeKey};
+export{uploadForm, closeForm, onEscapeKeyDown};
+

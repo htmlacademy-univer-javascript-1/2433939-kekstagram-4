@@ -1,9 +1,10 @@
 import {getRandomInteger, getUniqNumber, generateArray} from './util.js';
 
-const photosId = generateArray(25, 25);
+const photosId = generateArray(25,25);
 const usersId = generateArray(25,25);
-const NUMBER_OF_COMMENTS = 10;
-const NUMBER_OF_POSTS = 25;
+const NUMBERS_OF_PHOTO = 25;
+const NUMBERS_OF_POSTS = 10;
+
 
 const NAMES = [
   'Петя',
@@ -15,7 +16,7 @@ const NAMES = [
   'Олег',
   'Виктор'
 ];
-const MESSAGE = [
+const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -25,27 +26,28 @@ const MESSAGE = [
 ];
 const DESCRIPTIONS = [
   'Тут могла быть ваша реклама.',
-  'Это ведь так весело, правда? Правила нарушать.',
   'Если я в чем то сомневаюсь, я возвращаюсь к началу.',
+  'Это ведь так весело, правда? Правила нарушать.',
   'Я личность! Понятно? Бесформенная, но личность!',
   'Ну это уж совсем не доказательство…'
 ];
 
-const getComments = () => ({
+const getComment = () => ({
   id: getUniqNumber(usersId),
-  avatar:`img/avatar-${getRandomInteger(1, 6)}.svg`,
-  message: MESSAGE[getRandomInteger(0, 1)],
-  name: NAMES[getRandomInteger(0, NAMES.length-1)]
+  avatar: `img/avatar-${ getRandomInteger(1, 6) }.svg`,
+  message: MESSAGES[getRandomInteger(0, 1)],
+  name: NAMES[getRandomInteger(0,NAMES.length-1)]
 });
 
 const getPhoto = () => ({
-  id: photosId[getRandomInteger(1,NUMBER_OF_POSTS-1)],
-  url: `photos/${getRandomInteger(1, NUMBER_OF_POSTS-1)}.jpg`,
+  id: photosId[getRandomInteger(1,NUMBERS_OF_PHOTO-1)],
+  url: `photos/${getRandomInteger(1,NUMBERS_OF_PHOTO-1)}.jpg`,
   description: DESCRIPTIONS[getRandomInteger(0, DESCRIPTIONS.length-1)],
-  likes: getRandomInteger(15, 200),
-  comments: Array.from({length: NUMBER_OF_COMMENTS}, getComments)
+  likes:getRandomInteger(15, 200),
+  comments: Array.from({length: getRandomInteger(1, NUMBERS_OF_POSTS) }, getComment)
 });
 
-const getPhotos = () => Array.from({length: NUMBER_OF_POSTS}, getPhoto);
+const getPosts = () => Array.from({length: NUMBERS_OF_PHOTO}, getPhoto);
 
-export {getPhotos};
+export {getPosts};
+

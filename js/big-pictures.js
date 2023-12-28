@@ -10,30 +10,32 @@ const clearBigPicture = () => {
   document.querySelector('body').classList.remove('modal-open');
 };
 
-const escapeKey = (evt) => {
-  if (pressEscape(evt)) {
+const escapeKeyDown = (evt) => {
+  if(pressEscape(evt)){
     clearBigPicture();
-    document.removeEventListener('keydown', escapeKey);
+
+    document.removeEventListener('keydown', escapeKeyDown);
   }
 };
 
 closeButton.addEventListener('click', () => {
   clearBigPicture();
-  document.removeEventListener('keydown', escapeKey);
+
+  document.removeEventListener('keydown', escapeKeyDown);
 });
 
-const ClickPicture = (data) => {
-  document.addEventListener('keydown', escapeKey);
+const showBigPicture = (data) => {
+  document.addEventListener('keydown', escapeKeyDown);
 
   bigPicture.classList.remove('hidden');
 
   bigPicture.querySelector('.big-picture__img').querySelector('img').src = data.url;
-  bigPicture.querySelector('.social__caption').textContent = data.description;
   bigPicture.querySelector('.likes-count').textContent = data.likes;
+  bigPicture.querySelector('.social__caption').textContent = data.description;
 
   setComments(data.comments);
 
   document.querySelector('body').classList.add('modal-open');
 };
 
-export {ClickPicture};
+export {showBigPicture};
