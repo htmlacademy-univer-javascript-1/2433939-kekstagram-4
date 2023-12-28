@@ -24,13 +24,13 @@ const hashtagErrorHandler = (value) => {
 
   const hashtagInputText = value.toLowerCase().trim();
 
-  if (hashtagInputText.length === 0) {
+  if(hashtagInputText.length === 0) {
     return true;
   }
 
   const hashtagTexts = hashtagInputText.split(/\s+/);
 
-  if (hashtagTexts.length === 0) {
+  if(hashtagTexts.length === 0) {
     return true;
   }
 
@@ -67,7 +67,7 @@ const hashtagErrorHandler = (value) => {
 
   return inputRules.every((inputRule) => {
     const isValid = !inputRule.rule;
-    if (!isValid) {
+    if(!isValid) {
       errorMessage = inputRule.error;
     }
     return isValid;
@@ -83,12 +83,6 @@ const changeHashtagInput = () => {
 const setupHashtagInput = () => {
   hashtagInputField.addEventListener('input', changeHashtagInput);
 };
-
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-
-  formValidator.validate();
-});
 
 const checkFormValidation = () => formValidator.validate();
 

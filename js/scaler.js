@@ -1,10 +1,9 @@
 const SCALE_STEP = 25;
-
 const MAX_SCALE_VALUE = 100;
 const MIN_SCALE_VALUE = 25;
 
 const overlayElement = document.querySelector('.img-upload__overlay');
-const pictureElement = overlayElement.querySelector('.img-upload__preview img');
+const pictureElement = overlayElement.querySelector('.img-upload__preview').querySelector('img');
 const scaleElement = overlayElement.querySelector('.img-upload__scale');
 const scalerValueElement = scaleElement.querySelector('.scale__control--value');
 
@@ -13,7 +12,8 @@ const changeScale = (scaleCoefficient) => {
 
   if (currentScale < MIN_SCALE_VALUE) {
     currentScale = MIN_SCALE_VALUE;
-  } else if (currentScale > MAX_SCALE_VALUE) {
+  }
+  else if (currentScale > MAX_SCALE_VALUE) {
     currentScale = MAX_SCALE_VALUE;
   }
 

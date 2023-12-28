@@ -22,20 +22,18 @@ closeButton.addEventListener('click', () => {
   document.removeEventListener('keydown', escapeKey);
 });
 
-const ClickPicture = (picture, data) => {
-  picture.addEvntListener('click', () => {
-    document.addEventListener('keydown', escapeKey);
+const ClickPicture = (data) => {
+  document.addEventListener('keydown', escapeKey);
 
-    bigPicture.classList.remove('hidden');
+  bigPicture.classList.remove('hidden');
 
-    bigPicture.querySelector('.big-picture__img img').src = data.url;
-    bigPicture.querySelector('.social__caption').textContent = data.description;
-    bigPicture.querySelector('.likes-count').textContent = data.likes;
+  bigPicture.querySelector('.big-picture__img').querySelector('img').src = data.url;
+  bigPicture.querySelector('.social__caption').textContent = data.description;
+  bigPicture.querySelector('.likes-count').textContent = data.likes;
 
-    setComments(data.comments);
+  setComments(data.comments);
 
-    document.querySelector('body').classList.add('modal-open');
-  });
+  document.querySelector('body').classList.add('modal-open');
 };
 
 export {ClickPicture};
