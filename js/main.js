@@ -7,5 +7,4 @@ setData(onRecieveSuccess,
     showUnloadingErrorMessage('Не удалось загрузить данные ;(');
   },
   'GET');
-
 uploadForm();
