@@ -4,8 +4,8 @@ const MAX_HEAT_VALUE = 3;
 const RELIX = 10;
 
 const Slider = {
-  MAX: 100,
   MIN: 0,
+  MAX: 100,
   STEP: 1,
   CONNECT: 'lower'
 };
@@ -61,18 +61,19 @@ const effects = {
 
 const onSliderChange = () => {
   sliderValue.value = sliderItem.noUiSlider.get();
+
   uploadingPicture.style.filter = effects[currentEffect.replace('effects__preview--', '')]();
 };
 
 const onEffectsClick = (evt) => {
   let element = evt.target;
 
-  if (element.classList.contains('effects__label')) {
+  if(element.classList.contains('effects__label')){
     element = element.querySelector('span');
   }
 
-  if (element.classList.contains('effects__preview')) {
-    if (currentEffect !== '') {
+  if(element.classList.contains('effects__preview')) {
+    if(currentEffect !== '') {
       uploadingPicture.classList.remove(currentEffect);
     }
 
@@ -87,11 +88,13 @@ const onEffectsClick = (evt) => {
 
 const setEffects = () => {
   currentEffect = 'effects__preview--none';
+
   uploadingPicture.style.filter = effects.none();
+
   effectsList.children[0].querySelector('input').checked = true;
 };
 
 sliderItem.noUiSlider.on('change', onSliderChange);
 effectsList.addEventListener('click', onEffectsClick);
 
-export {setEffects};
+export{setEffects};

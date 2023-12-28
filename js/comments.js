@@ -2,59 +2,58 @@ const MAX_NEW_COMMENTS = 5;
 
 const imageContainer = document.querySelector('.big-picture');
 const loadMoreButton = imageContainer.querySelector('.comments-loader');
-const commentCountPicture = imageContainer.querySelector('.social__comment-count');
+const commentsCountItem = imageContainer.querySelector('.social__comment-count');
 const commentsContainer = imageContainer.querySelector('.social__comments');
 const commentTemplate = commentsContainer.children[0];
 
-let COMMENTS_MULTIPLIER = 1;
+let COMMENTS_MULTIPLYER = 1;
 
-const createCommentElement = (commentData) => {
-  const commentElement = commentTemplate.cloneNode(true);
-  const commentImage = commentElement.querySelector('.social__picture');
+const createCommentItem = (comment) => {
+  const newComment = commentTemplate.cloneNode(true);
+  const commentImage = newComment.querySelector('.social__picture');
 
-  commentImage.src = commentData.avatar;
-  commentImage.alt = commentData.name;
-  commentElement.querySelector('.social__text').textContent = commentData.message;
+  commentImage.src = comment.avatar;
+  commentImage.alt = comment.name;
 
-  commentElement.classList.add('hidden');
+  newComment.querySelector('.social__text').textContent = comment.message;
 
-  return commentElement;
+  newComment.classList.add('hidden');
+
+  return newComment;
 };
 
 const addNewComments = () => {
-  const newCommentsCount = MAX_NEW_COMMENTS * COMMENTS_MULTIPLIER;
-  const totalCommentsCount = commentsContainer.children.length;
-  const addedCommentsCount = newCommentsCount >= totalCommentsCount ? totalCommentsCount : newCommentsCount;
+  const newCommentsCount = MAX_NEW_COMMENTS * COMMENTS_MULTIPLYER;
+  const commentsOverallCount = commentsContainer.children.length;
+  const addedCommentsCount = newCommentsCount >= commentsOverallCount ? commentsOverallCount : newCommentsCount;
 
-  for (let i = 0; i < addedCommentsCount; i++) {
+  for(let i = 0; i < addedCommentsCount; i++) {
     if (i < newCommentsCount && i >= newCommentsCount - MAX_NEW_COMMENTS) {
       commentsContainer.children[i].classList.remove('hidden');
     }
   }
 
-  if (totalCommentsCount > newCommentsCount) {
-    loadMoreButton.classList.toggle('hidden');
+  if(commentsOverallCount > newCommentsCount) {
+    loadMoreButton.classList.remove('hidden');
   }
-  else {
+  else{
     loadMoreButton.classList.add('hidden');
   }
-  commentCountPicture.innerHTML = `${addedCommentsCount} из <span class="comments-count">${totalCommentsCount}</span> комментариев`;
+
+  commentsCountItem.innerHTML = `${addedCommentsCount} из <span class="comments-count">${commentsOverallCount}</span> комментариев`;
 };
 
-const setComments = (commentsData) => {
+const setComments = (comments) => {
   commentsContainer.innerHTML = '';
-
-  commentsData.forEach((commentData) => {
-    commentsContainer.appendChild(createCommentElement(commentData));
+  comments.forEach((comment) => {
+    commentsContainer.appendChild(createCommentItem(comment));
   });
-
-  COMMENTS_MULTIPLIER = 1;
+  COMMENTS_MULTIPLYER = 1;
   addNewComments();
 };
 
 loadMoreButton.addEventListener('click', () => {
-  COMMENTS_MULTIPLIER++;
-  addNewComments();
+  addNewComments(COMMENTS_MULTIPLYER++);
 });
 
 export {setComments};

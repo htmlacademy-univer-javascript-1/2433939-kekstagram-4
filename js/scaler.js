@@ -1,31 +1,30 @@
 const SCALE_STEP = 25;
-const MAX_SCALE_VALUE = 100;
-const MIN_SCALE_VALUE = 25;
+const MIN_SCALER_VALUE = 25;
+const MAX_SCALER_VALUE = 100;
 
 const overlayElement = document.querySelector('.img-upload__overlay');
-const pictureElement = overlayElement.querySelector('.img-upload__preview').querySelector('img');
-const scaleElement = overlayElement.querySelector('.img-upload__scale');
-const scalerValueElement = scaleElement.querySelector('.scale__control--value');
+const uploadingPicture = overlayElement.querySelector('.img-upload__preview').querySelector('img');
+const scale = overlayElement.querySelector('.img-upload__scale');
+const scalerValue = scale.querySelector('.scale__control--value');
 
 const changeScale = (scaleCoefficient) => {
-  let currentScale = Number(scalerValueElement.value.replace('%', '')) + scaleCoefficient * SCALE_STEP;
+  let curentScale = Number(scalerValue.value.replace('%', '')) + scaleCoefficient * SCALE_STEP;
 
-  if (currentScale < MIN_SCALE_VALUE) {
-    currentScale = MIN_SCALE_VALUE;
+  if(curentScale < MIN_SCALER_VALUE) {
+    curentScale = MIN_SCALER_VALUE;
   }
-  else if (currentScale > MAX_SCALE_VALUE) {
-    currentScale = MAX_SCALE_VALUE;
+  else if (curentScale > MAX_SCALER_VALUE) {
+    curentScale = MAX_SCALER_VALUE;
   }
 
-  scalerValueElement.value = `${currentScale}%`;
-  pictureElement.style.transform = `scale(${currentScale / 100})`;
+  scalerValue.value = `${curentScale}%`;
+  uploadingPicture.style.transform = `scale(${curentScale / 100})`;
 };
 
-const ClickOnScaleButton = (evt) => {
-  if (evt.target.matches('button')) {
+const clickOnScaleButton = (evt) => {
+  if(evt.target.matches('button')) {
     let coefficient = 1;
-
-    if (evt.target.matches('.scale__control--smaller')) {
+    if(evt.target.matches('.scale__control--smaller')) {
       coefficient = -1;
     }
 
@@ -33,11 +32,11 @@ const ClickOnScaleButton = (evt) => {
   }
 };
 
-const setInitialScale = () => {
-  scalerValueElement.value = `${MAX_SCALE_VALUE}%`;
-  pictureElement.style.transform = `scale(${MAX_SCALE_VALUE / 100})`;
+const setScale = () => {
+  scalerValue.value = `${MAX_SCALER_VALUE}%`;
+  uploadingPicture.style.transform = `scale(${MAX_SCALER_VALUE / 100})`;
 };
 
-scaleElement.addEventListener('click', ClickOnScaleButton);
+scale.addEventListener('click', clickOnScaleButton);
 
-export {setInitialScale};
+export{setScale};
