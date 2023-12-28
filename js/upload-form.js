@@ -1,8 +1,11 @@
 import {pressEscape} from './util.js';
-import {setupHashtagInput, clearHashtagsField} from './hashtag.js';
 import {setEffects} from './effects.js';
 import {setInitialScale} from './scaler.js';
+import {setupHashtagInput, clearHashtagsField, checkFormValidation} from './hashtag.js';
+import {setData} from './connect-server.js';
+import {addPostMessages, showSuccessMessage, closeMessage, showErrorMessage} from './post-message.js';
 
+const form = document.querySelector('.img-upload__form');
 const fileInput = document.querySelector('#upload-file');
 const overlayElement = document.querySelector('.img-upload__overlay');
 const closeUploadButton = document.querySelector('#upload-cancel');
@@ -17,6 +20,7 @@ const clearUploadForm = () => {
   fileInput.value = '';
   clearHashtagsField();
   commentsTextArea.value = '';
+  closeMessage();
 
   submitButton.disabled = false;
 };
@@ -49,6 +53,17 @@ const ClickOnUpload = () => {
 
 const uploadForm = () => {
   fileInput.addEventListener('change', ClickOnUpload);
+  addPostMessages();
 };
 
-export {uploadForm};
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+
+  if(checkFormValidation()) {
+    setData(showSuccessMessage, showErrorMessage, 'POST', new FormData(form));
+  }
+};
+
+form.addEventListener('submit', onFormSubmit);
+
+export {uploadForm, closeUploadButton, escapeKey};

@@ -21,6 +21,7 @@ closeButton.addEventListener('click', () => {
   clearBigPicture();
   document.removeEventListener('keydown', escapeKey);
 });
+
 const ClickPicture = (picture, data) => {
   picture.addEvntListener('click', () => {
     document.addEventListener('keydown', escapeKey);

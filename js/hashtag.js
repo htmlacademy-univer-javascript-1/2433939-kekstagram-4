@@ -76,12 +76,12 @@ const hashtagErrorHandler = (value) => {
 
 formValidator.addValidator(hashtagInputField, hashtagErrorHandler, getErrorMessage, 2, false);
 
-const changeHashtagInputChange = () => {
+const changeHashtagInput = () => {
   submitButton.disabled = !formValidator.validate();
 };
 
 const setupHashtagInput = () => {
-  hashtagInputField.addEventListener('input', changeHashtagInputChange);
+  hashtagInputField.addEventListener('input', changeHashtagInput);
 };
 
 uploadForm.addEventListener('submit', (evt) => {
@@ -90,10 +90,12 @@ uploadForm.addEventListener('submit', (evt) => {
   formValidator.validate();
 });
 
+const checkFormValidation = () => formValidator.validate();
+
 const clearHashtagsField = () => {
   hashtagInputField.value = '';
 
   formValidator.validate();
 };
 
-export {clearHashtagsField, setupHashtagInput};
+export {clearHashtagsField, setupHashtagInput, checkFormValidation};

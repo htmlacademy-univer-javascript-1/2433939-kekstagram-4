@@ -12,8 +12,11 @@ const renderPicture = (picture) => {
   pictureElement.querySelector('.picture__likes');
   pictureElement.querySelector('.picture__comments');
 
-  handleClickPicture(pictureElement, picture);
+  pictureElement.addEventListener('click', (evt) => {
+    evt.preventDefault();
 
+    handleClickPicture(picture);
+  });
   return pictureElement;
 };
 
