@@ -11,7 +11,7 @@ let pictures = [];
 const onRecieveSuccess = (data) => {
   pictures = data.slice();
   renderUserPhotos(data);
-  showFilteredPictures();
+  showFilteredPictures(pictures);
 };
 
 const showUnloadingErrorMessage = (errorText) => {
