@@ -1,4 +1,4 @@
-import {uploadForm} from './upload-form.js';
+import {uploadNewForm} from './upload-form.js';
 import {setData} from './api.js';
 import {onRecieveSuccess, showUnloadingErrorMessage} from './upload-data.js';
 
@@ -8,4 +8,4 @@ setData(onRecieveSuccess,
   },
   'GET');
 
-uploadForm();
+uploadNewForm();

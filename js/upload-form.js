@@ -4,6 +4,7 @@ import {setScale} from './scaler.js';
 import {setEffects} from './effects.js';
 import {setData} from './api.js';
 import {addPostMessages, showSuccessMessage, closeMessage, showErrorMessage} from './message.js';
+import {uploadUserPicture} from './user-picture.js';
 
 const form = document.querySelector('.img-upload__form');
 
@@ -35,16 +36,10 @@ const onEscapeKeyDown = (evt) => {
   }
 };
 
-const closeForm = () => {
-  clearForm();
-
-  document.removeEventListener('keydown', onEscapeKeyDown);
-};
-
-uploadingClose.addEventListener('click', closeForm);
-
 const onUploadClick = () => {
   document.addEventListener('keydown', onEscapeKeyDown);
+
+  uploadUserPicture(uploadingControl.files[0]);
 
   uploadingOverlay.classList.remove('hidden');
   document.querySelector('body').classList.add('modal-open');
@@ -55,10 +50,18 @@ const onUploadClick = () => {
   uploadHashtagInput();
 };
 
-const uploadForm = () => {
+const uploadNewForm = () => {
   uploadingControl.addEventListener('change', onUploadClick);
   addPostMessages();
 };
+
+const closeForm = () => {
+  clearForm();
+
+  document.removeEventListener('keydown', onEscapeKeyDown);
+};
+
+uploadingClose.addEventListener('click', closeForm);
 
 const onFormSubmit = (evt) => {
   evt.preventDefault();
@@ -70,5 +73,5 @@ const onFormSubmit = (evt) => {
 
 form.addEventListener('submit', onFormSubmit);
 
-export{uploadForm, closeForm, onEscapeKeyDown};
+export{uploadNewForm, closeForm, onEscapeKeyDown};
 
